@@ -3,7 +3,6 @@
 
 Getting Started Guide: Program Synthesis with Algebraic Library Specifications
 -------------------------------------------------------------------------------
--------------------------------------------------------------------------------
 
 Setup
 ------
@@ -45,8 +44,8 @@ Basic Running of JLibSketch and Interpretting Output:
 - Now let's look at `ArtifactExample2.sk`. This translation is mostly straightforward, similiar to `ArtifactExample1.sk`. However, there is one notable difference. On lines 13 and 15, the calls to s.push(toPush) and s.pop() have been translated into two statements. On line 13, he first calls the return value function (which for `push` is not assigned to anything). The second assigns to our stack `s` the result of calling the side-effect function (which as you recall will update `s`'s `_stack` field). The same translation occurs for `pop` on line 15. Note that these calls use the handle functions (`push_Object_E`, `pushb_Object_E`, `pop_Object`, and `popB_Object`) from `Stack.sk`.
 - Let's look at the C++ output. The output is written to `result/output/ArtifactExample2.txt`. Open that file as before.
 - Similar to `ArtifactExample1.txt` there is some Sketch stuff at the top that can be ignored. Skip to line 8 where the C++ translation of `mn_int` from the `ArtifactExample2.sk` file is given. We can see we create the stack `s` which has been renmaed to `s_s6` (line 15). Similarly, we create `o1` and `o2` as `o1_s10` and `o2_s14` respectively (lines 19 and 23). The temporary variable `toPush` has been optimized away. However, we can see the calls to `push_Object_E` and `pushb_Object_E` both have `o2_s14` as the second argument, indicating Sketch correctly assigned `toPush` to `o2`.
+
 Step By Step Instructions: Program Synthesis with Algebraic Library Specifications
------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------
 
 Benchmarks

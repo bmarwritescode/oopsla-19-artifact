@@ -30,13 +30,46 @@ Within `java-sketch/` there are a number of directories and files associated wit
 * `artifact_examples/`: contains some JSketch and JLibSketch examples for this evaluation
 * `benchmarks/`: contains all benchmark programs from the paper
 * `artifact_scripts/`: contains scripts for running the benchmarks and examples
+* `jsk.sh`: shell script for running JSketch with JLibSketch
+* `result/`: contains output Sketch code produced by JSketch with JLibSketch
 
 The rest of the repo contains the source code of JSketch and JLibSketch, as well as a number of tests of both of these tools.
 
-Basic Testing
---------------
+## Getting Started: Basic Testing
 
-Basic Running of JSketch and Interpretting Output:
+### Running JSketch and Interpretting Output
+
+We will first run a simple test to ensure the JSketch built correctly. Run the following from `java-sketch/`:
+```
+./jsk.sh artifact_examples/ArtifactExample1.java
+```
+On running the command, one should see many lines of output, like the following (`...` abreviates all lines except the first and last two lines):
+```
+XX:XX:XX [INFO] /Users/grumpy/Research/java-sketch8/java_sk/main.py:39 => parsing ['test/ArtifactExample1.java']
+...
+XX:XX:XX [DEBUG] java_sk/sketch.py:35 => sketch result/sk_ArtifactExample1/main.sk --fe-tempdir result --fe-keep-tmp --fe-output sk_ArtifactExample1 --fe-inc result/sk_ArtifactExample1
+XX:XX:XX [INFO] java_sk/sketch.py:39 => sketch done: result/output/ArtifactExample1.txt
+```
+Note that `XX:XX:XX` will be replaced with the current time when run.
+
+You just ran your first JSketch problem! Let's take a look at what we just ran to learn how to interpret JSketch output. We just ran the following JSketch program (also can be viewed directly from the file in `artifact_examples/ArtifactExample1.java`):
+```
+class ArtifactExample1 {
+
+    public harness static void mn(int x) {
+	Foo f = new Foo(x);
+
+	assert f.mulBy2() == x + x;
+    }
+}
+
+class Foo {
+    int x;
+    public Foo(int x) { this.x = x; }
+    public int mulBy2() { return this.x*??; }
+}
+```
+
 
 - Once you have the docker image running, navigate to the `java-sketch/` folder in the home directory
 - In this folder, you will find all relevant materials for the artifact

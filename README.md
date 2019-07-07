@@ -319,6 +319,8 @@ In Table 2, we record the number of calls to `stmts` and `guards` for each bench
 
 Performance on the benchmarks may vary significantly depending on the power of the machine used. However, we expect that the comparative difference between mocks and algebraic specifications should remain the same. One should also note that there is significant variance for some of the benchmarks (see IQRs from Table 2 in the paper), which means that running the "Abridged" or "Short" tests could result in performance that varies somewhat significantly from the median reported in the paper (bolded in Table 2).
 
+Note that times reported in output files are in millesconds and not in seconds, as reported in the paper.
+
 ### Running the Full Benchmark Tests
 
 NOTE: This will take a very long time to run. 31 trials of each experiment was run, meaning this will run a total of 551 experiments, each of which can take up to 4 hours. We would expect running the full benchmark suite will take at least three weeks with a very powerful machine.

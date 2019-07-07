@@ -248,25 +248,69 @@ void mn_int (int x)/*Artifac..ample2.sk:7*/
 
 In general, parsing the final Sketch output can be a little challenging. In this case, we can see we create the stack `s` (renamed to `s_s6`) and `o1` and `o2` (renamed to `o1_s10` and `o2_s14`). The temporary variable `toPush` was optimized away by Sketch, however, we can see the calls to `push_Object_E` and `pushb_Object_E` both have `o2_s14` as the second argument, indicating Sketch correctly assigned `toPush` to `o2`.
 
-Step By Step Instructions: Program Synthesis with Algebraic Library Specifications
------------------------------------------------------------------------------------
+## Step by Step: Reviewing the Benchmarks
 
-Benchmarks
------------
+As mentioned before, the benchmarks from the paper (described in Table 1) can be found in `benchmarks/`.
 
-- You can find the benchmarks (described in Table 1) in	`test/axioms/benchmarks`.
-- In this directory, each folder contains a different benchmark. For each benchmark, the synthesis problem is contained in the file denoted "NAME_syn.java" while the solution is simply "NAME.java". All shared libraries (that is libraries used with both specs and mocks) are contained in the `shared/` folder. All specs are contained in the `rewrite/` folder, and all mocks are contained in the `mocks/` folder.
-- For the cryptography examples, please note the "_mock" and "_rewrite" naming scheme which differentiates the versions used for mocks and rewrites. This was necessary due to annotations, as discussed in Section 4 of the paper.
+In this directory, each folder contains a different benchmark. For each benchmark, the synthesis problem is contained in the file denoted "NAME_syn.java" while the solution is simply "NAME.java". All shared libraries (that is libraries used with both specs and mocks) are contained in the `shared/` folder. All specs are contained in the `rewrite/` folder, and all mocks are contained in the `mocks/` folder.
 
-LOC Comparison (Section 5.1)
------------------------------
+For the cryptography examples, please note the "_mock" and "_rewrite" naming scheme which differentiates the versions used for mocks and rewrites. This was necessary due to annotations, as discussed in Section 4 of the paper.
 
-- One can manually compare the algebraic specifications versus the mocks for various libraries by looking in the `rewrite/` and `mock/` folders for the benchmarks. One should see, as described in section 5.1, that both implement the same API.
-- To compare the lines of code used for each approach, we have preinstalled the SLOCCount tool. To run the comparison, simply run the `sloccounter.sh` script by running `./sloccounter.sh`. If for some reason it doesn't have execute permissions, give it them by running first `chmod +x sloccounter.sh`.
-- The output of this will be stuck in the `sloccounts/` folder. Each benchmark will have its own file. We will pay attemtion to the output in the SLOC-by-Language column about halfway through the output. Here, copare the lines where the directory (second column) equals `mock` and `rewrite`. The number of lines of code for each of these are given in the third column by `java=XXX` where XXX is the number of reported LOC in the paper.
+## Step by Step: LOC Comparison (Section 5.1)
 
-Synthesis Problems (Section 5.2)
----------------------------------
+To compare the lines of code used for each approach, we have preinstalled the SLOCCount tool. To run the comparison, navigate to `artifact_scripts/` and run the following:
+```
+chmod +x sloccounter.sh
+./sloccounter.sh
+```
+The output of this will be stuck in the `artifact_scripts/sloccounts/` folder. Each benchmark will have its own file, named `$BENCHMARK_NAME$.txt`. For example, here is the output from `SuffixArray.txt`.
+```
+Have a non-directory at the top, so creating directory top_dir
+Adding /Users/grumpy/Research/tmp/benchmarks/SuffixArray//SuffixArray.java to top_dir
+Adding /Users/grumpy/Research/tmp/benchmarks/SuffixArray//SuffixArrayTest.java to top_dir
+Adding /Users/grumpy/Research/tmp/benchmarks/SuffixArray//SuffixArray_syn.java to top_dir
+Adding /Users/grumpy/Research/tmp/benchmarks/SuffixArray//SuffixArray_syn.java~ to top_dir
+Creating filelist for mock
+Creating filelist for rewrite
+Creating filelist for shared
+Categorizing files.
+Finding a working MD5 command....
+Found a working MD5 command.
+Computing results.
+
+
+SLOC	Directory	SLOC-by-Language (Sorted)
+399     mock            java=399
+385     shared          java=385
+310     top_dir         java=310
+225     rewrite         java=225
+
+
+Totals grouped by language (dominant language first):
+java:          1319 (100.00%)
+
+
+
+
+Total Physical Source Lines of Code (SLOC)                = 1,319
+Development Effort Estimate, Person-Years (Person-Months) = 0.27 (3.21)
+ (Basic COCOMO model, Person-Months = 2.4 * (KSLOC**1.05))
+Schedule Estimate, Years (Months)                         = 0.32 (3.89)
+ (Basic COCOMO model, Months = 2.5 * (person-months**0.38))
+Estimated Average Number of Developers (Effort/Schedule)  = 0.82
+Total Estimated Cost to Develop                           = $ 36,133
+ (average salary = $56,286/year, overhead = 2.40).
+SLOCCount, Copyright (C) 2001-2004 David A. Wheeler
+SLOCCount is Open Source Software/Free Software, licensed under the GNU GPL.
+SLOCCount comes with ABSOLUTELY NO WARRANTY, and you are welcome to
+redistribute it under certain conditions as specified by the GNU GPL license;
+see the documentation for details.
+Please credit this data as "generated using David A. Wheeler's 'SLOCCount'."
+```
+
+The LOC information is given in the table about halfway through the output. the first row gives the LOC, the second the directory, and the third the LOC by language (which is the same as the LOC as there is only Java). We are interested in the first and last lines, which report that `SuffixArray` has `399` LOC for mocks and `225` LOC for rewrites (algebraic specifications).
+
+## Step by Step: Synthesis Problems (Section 5.2)
 
 - In Table 2, we see a brief description of the synthesis problems, including the number of calls to the `stmts` and `guards` generators. This information can be verified by visiting the various `*_syn.java` files for each benchmark.
 

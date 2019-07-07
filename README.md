@@ -1,13 +1,37 @@
 # Artifact for OOPSLA 2019 Submission "Program Synthesis with Algebraic Library Specifications"
 
+## Getting Started: Requirements
 
-Getting Started Guide: Program Synthesis with Algebraic Library Specifications
--------------------------------------------------------------------------------
+* [Vagrant](https://www.vagrantup.com/).
 
-Setup
-------
+## Getting Started: Setup
 
-- (TODO: Include Docker setup...)
+To use Vagrant to produce a VM, simply clone and navigate into this repo, and call `vagrant up`:
+```
+git clone https://github.com/bmarwritescode/oopsla-19-artifact.git
+cd oopsla-19-artifact
+vagrant up              # Build the VM
+```
+
+This build should take approximately 30-40 minutes to complete. After this, you can call `vagrant ssh` from within the same directory to access the VM.
+
+## Getting Started: Navigating the VM
+
+The VM includes both JSketch (with JLibSketch add-on) and Sketch.
+
+In the home directory, there is one file and two folders:
+
+* `mysql-apt-config_0.7.2-1_all.deb`: contains setup materials for the VM (ignore this file)
+* `sketch/`: houses the Sketch source code (ignore this folder)
+* `java-sketch/`: houses JSketch and the JLibSketch add-on
+
+Within `java-sketch/` there are a number of directories and files associated with the tool, however, we will only need the following:
+
+* `artifact_examples/`: contains some JSketch and JLibSketch examples for this evaluation
+* `benchmarks/`: contains all benchmark programs from the paper
+* `artifact_scripts/`: contains scripts for running the benchmarks and examples
+
+The rest of the repo contains the source code of JSketch and JLibSketch, as well as a number of tests of both of these tools.
 
 Basic Testing
 --------------

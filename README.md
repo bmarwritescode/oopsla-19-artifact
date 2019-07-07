@@ -25,7 +25,7 @@ In the home directory, there is one file and two folders:
 * `sketch/`: houses the Sketch source code (ignore this folder)
 * `java-sketch/`: houses JSketch and the JLibSketch add-on
 
-Within `java-sketch/` there are a number of directories and files associated with the tool, however, we will only need the following:
+Within `java-sketch/` there are a number of directories and files associated with the tool, however, we will only focus on the following:
 
 * `artifact_examples/`: contains some JSketch and JLibSketch examples for this evaluation
 * `artifact_results/`: folder for results of running artifact
@@ -327,10 +327,12 @@ To run the full performance comparison from the paper, navigate to `java-sketch`
 ```
 python -m artifact_scripts.jlibsketch_benchmarks_full
 ```
-This will create 2 output files in the `artifact_results/full/` folder:
+This will create 4 output files in the `artifact_results/full/` folder:
 
-* `out_mock.txt`: contains timing output for each benchmark using mocks
-* `out_rewrite.txt: contains timing output for each benchmark using specs
+* `out_mock.txt`: contains rolling timing output for each experiment using mocks
+* `out_rewrite.txt`: contains rolling timing output for each experiment using specs
+* `results_mock.csv`: contains final timing output for each experiment using mocks
+* `results_rewrite.csv`: contains final timing output for each experiment using mocks
 
 Each benchmark is run 31 times. Currently there is no automatic script to read in this information and calculate the statistics from Table 2; this can be done manually if desired.
 
@@ -342,7 +344,7 @@ Here, instead of running 31 trials of each experiment, we run each experiment on
 ```
 python -m artifact_scripts.jlibsketch_benchmarks_abridged
 ```
-Again, this creates 2 output files in `artifact_results/abridged/` folder, the same as described for the full experiments.
+Again, this creates 4 output files in `artifact_results/abridged/` folder, the same as described for the full experiments.
 
 One can observe the Sketch output of JLibSketch in `result/` as with the example problem from the Getting Started guide.
 
@@ -356,5 +358,5 @@ Here, we only run the benchmarks that finish in under 10 minutes. To run, naviga
 ```
 python -m artifact_scripts.jlibsketch_benchmarks_short
 ```
-Similarly, this creates 2 output files in `artifact_results/short/` and Sketch input and ouput can be viewed in the `result/` folder.
+Similarly, this creates 4 output files in `artifact_results/short/` and Sketch input and ouput can be viewed in the `result/` folder.
 

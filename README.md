@@ -264,7 +264,7 @@ To compare the lines of code used for each approach, we have preinstalled the SL
 chmod +x sloccounter.sh
 ./sloccounter.sh
 ```
-The output of this will be stuck in the `artifact_scripts/sloccounts/` folder. Each benchmark will have its own file, named `$BENCHMARK_NAME$.txt`. For example, here is the output from `SuffixArray.txt`.
+The output of this will be stuck in the `artifact_results/sloccounts/` folder. Each benchmark will have its own file, named `$BENCHMARK_NAME$.txt`. For example, here is the output from `SuffixArray.txt`.
 ```
 Have a non-directory at the top, so creating directory top_dir
 Adding /Users/grumpy/Research/tmp/benchmarks/SuffixArray//SuffixArray.java to top_dir

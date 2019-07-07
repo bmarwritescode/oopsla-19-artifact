@@ -37,56 +37,61 @@ The rest of the repo contains the source code of JSketch and JLibSketch, as well
 
 ## Getting Started: Basic Testing
 
-### Running JSketch and Interpretting Output
+### Running JLibSketch and Interpretting Output
 
 We will first run a simple test to ensure the JSketch built correctly. Run the following from `java-sketch/`:
 ```
-./jsk.sh artifact_examples/ArtifactExample1.java
+./jsk.sh artifact_examples/ArtifactExample.java --no-lib model/lang/Object.java
 ```
 On running the command, one should see many lines of output, like the following (`...` abreviates all lines except the first and last two lines):
 ```
-XX:XX:XX [INFO] /Users/grumpy/Research/java-sketch8/java_sk/main.py:39 => parsing ['test/ArtifactExample1.java']
+12:29:15 [INFO] /home/vagrant/java-sketch/java_sk/main.py:39 => parsing ['artifact_examples/ArtifactExample.java']
 ...
-XX:XX:XX [DEBUG] java_sk/sketch.py:35 => sketch result/sk_ArtifactExample1/main.sk --fe-tempdir result --fe-keep-tmp --fe-output sk_ArtifactExample1 --fe-inc result/sk_ArtifactExample1
-XX:XX:XX [INFO] java_sk/sketch.py:39 => sketch done: result/output/ArtifactExample1.txt
-```
+12:29:19 [DEBUG] java_sk/sketch.py:35 => sketch result/sk_ArtifactExample/main.sk --fe-tempdir result --fe-keep-tmp --fe-output sk_ArtifactExample --fe-inc result/sk_ArtifactExample
+12:29:22 [INFO] java_sk/sketch.py:39 => sketch done: result/output/ArtifactExample.txt```
 Note that `XX:XX:XX` will be replaced with the current time when run.
 
-You just ran your first JSketch problem! Let's take a look at what we just ran to learn how to interpret JSketch output. We just ran the following JSketch program (also can be viewed directly from the file in `artifact_examples/ArtifactExample1.java`):
+You just ran your first JSketch problem! Let's take a look at what we just ran to learn how to interpret JSketch output. We just ran the following JSketch program (also can be viewed directly from the file in `artifact_examples/ArtifactExample.java`):
 ```
-class ArtifactExample1 {
+@rewriteClass
+class Stack<E> {
+    @alg
+    E push(E e);
+    @alg
+    E pop();
 
-    public harness static void mn(int x) {
-	Foo f = new Foo(x);
-
-	assert f.mulBy2() == x + x;
+    // pop(push!(s, x)) = x
+    rewrite E pop(Stack push!(Stack s, E e)) {
+    	return e;
     }
 }
 
-class Foo {
-    int x;
-    public Foo(int x) { this.x = x; }
-    public int mulBy2() { return this.x*??; }
+class ArtifactExample {
+    public harness static void mn(int x) {
+	Stack<Object> s = new Stack<Object>();
+	Object o1 = new Object();
+	Object o2 = new Object();
+
+	# Push either o1 or o2 onto the stack
+	Object toPush = {| o1, o2 |};
+	s.push(toPush);
+
+	# Assert that the top element on the stack is o2
+	Object popped = s.pop();
+	assert popped.equals(o2);
+    }
 }
 ```
 
+The first class `Stack` is an `@rewriteClass` used to define one axiom for the stack data structure: `pop(push!(s, x)) = x`. This syntax is explained in Section 2 of the paper.
 
-- Once you have the docker image running, navigate to the `java-sketch/` folder in the home directory
-- In this folder, you will find all relevant materials for the artifact
-- JSketch should already be built. We will run jsketch on the simple test given in the file `test/ArtifactExample1.java`
-- Open that file, and observe the contents; this is a JSketch file
-- There are two classes, `ArtifactExample1` and `Foo`. Class `Foo` has a constructor, which sets its field `x`, and another method `mulBy2`, which returns the value of its multiplied by a constant, which JSketch will find. The `harness` for this method is given in `ArtifactExample1`, in the `mn` method. The `mn` method takes one (unbound) argument `x`, and creates a `Foo` object with this `x`. It then `assert`s that calling the `mulBy2` method from this new `Foo` object `f` will result in a value which is equal to `x+x`. 
-- To run JSketch on this example, run the following command from the `java-sketch/` folder: `./jsk.sh test/ArtifactExample1.java --no-lib model/lang/Object.java`
-- On running, you will see output of the form `XX:XX:XX [DEBUG] ... => ...`
-- The lines might also have `[INFO]` instead of `[DEBUG]`
-- The last line should end with `sketch done: result/output/ArtifactExample1.txt`
-- Before looking at the result, let's first look at the generated Sketch code, output to the folder `result/sk_ArtifactExample1`.
+The second class `ArtifactExample` has one method `mn` which gives the synthesis problem and its harness. It first creates a stack `s` and two objects `o1` and `o2`. It then pushes either `o1` or `o2` onto the stack. Finally, it pops the first element of the stack and asserts that the result is `o2`. JLibSketch must successfully determin that `o2` should be the element pushed onto `s`.
+
+The generated Sketch code for this problem is output to `result/sk_ArtifactExample`,
+
 - In this folder, you will see 6 different Sketch files. `main.sk`, `meta.sk`, and `array.sk` contain Sketch configuration options, class IDs (`__cid` explained in Section 4), and a special Sketch struct for arrays respectively. `Object.sk` includes the `Object` struct described in Section 4, as well as the sketch translation of the `Object` class `.equals` method. The final two files, `ArtifactExample1.sk` and `Foo.sk` contain the Sketch translation of the two classes from `ArtifactExample1.java`.
-- Let's start by looking at `Foo.sk`. There are three functions in this file, `Foo_Foo`, `Foo_Foo_int`, and `mulBy2`. The first function is the default constructor (i.e. no arguments) that was implicity present in the `Foo` class. For the Sketch translation, an additional argument `self` has been added which represents the caller. In this case of the constructor, this `self` Object is instantiated as a new `Object` struct with the appropriate class ID (`__cid`). The second function, `Foo_Foo_int` is the Sketch translation of the single argument constructor. Notice that the name of the function has been changed to include the parameter types to handle method overloading in Java. The body of this function sets the `x_Foo` field (renamed with class as described in Section 4) to `x`. The last function `mulBy2` is almost identical to the Java function with the exception of the caller argument `self`.
-- Now let's look at `ArtifactExample1.sk`. You can see that again we have a default constructor. We also have the `harness` function `mn_int`. The translation here is mostly what you would expect (and as is described in Section 4). Notably, the call to `mulBy2` has been translated to a conditional check on the object type for dynamic dispatch, but as no class extends it, `Foo`'s `mulBy2` method is the only option.
+
 - Now that we've seen what the Sketch input looks like, let's look at the Sketch output. Open the output file: `emacs result/output/ArtifactExample1.txt` (replace `emacs` with whichever text editor you prefer)
-- Here you will see the resulting C++ code produced. At the top you will see some ouput about the sketch internals, which you can ignore for now. Navigate to the line where it says `/* BEGIN PACKAGE ArtifactExample*/`. This should be on line 6.
-- First, you will see the generated code for `mn_int`. This code is a fairly straightforward (though ugly looking) translation of the Sketch code. Navigate now to `/* BEGIN PACKAGE Foo*/` on line 93. Again, most of this translation is fairly straightforward (and described in more detail in the Sketch manual: TODO: ADD LINK). However, notice on line 107 that the `??` in the `mulBy2` function has been correctly replaced by `2`. Sketch indeed found the right answer. 
 
 Basic Running of JLibSketch and Interpretting Output:
 

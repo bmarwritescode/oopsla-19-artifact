@@ -48,7 +48,8 @@ On running the command, one should see many lines of output, like the following 
 12:29:15 [INFO] /home/vagrant/java-sketch/java_sk/main.py:39 => parsing ['artifact_examples/ArtifactExample.java']
 ...
 12:29:19 [DEBUG] java_sk/sketch.py:35 => sketch result/sk_ArtifactExample/main.sk --fe-tempdir result --fe-keep-tmp --fe-output sk_ArtifactExample --fe-inc result/sk_ArtifactExample
-12:29:22 [INFO] java_sk/sketch.py:39 => sketch done: result/output/ArtifactExample.txt```
+12:29:22 [INFO] java_sk/sketch.py:39 => sketch done: result/output/ArtifactExample.txt
+```
 Note that `XX:XX:XX` will be replaced with the current time when run.
 
 You just ran your first JSketch problem! Let's take a look at what we just ran to learn how to interpret JSketch output. We just ran the following JSketch program (also can be viewed directly from the file in `artifact_examples/ArtifactExample.java`):

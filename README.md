@@ -28,6 +28,7 @@ In the home directory, there is one file and two folders:
 Within `java-sketch/` there are a number of directories and files associated with the tool, however, we will only need the following:
 
 * `artifact_examples/`: contains some JSketch and JLibSketch examples for this evaluation
+* `artifact_results/`: folder for results of running artifact
 * `benchmarks/`: contains all benchmark programs from the paper
 * `artifact_scripts/`: contains scripts for running the benchmarks and examples
 * `jsk.sh`: shell script for running JSketch with JLibSketch
@@ -312,17 +313,47 @@ The LOC information is given in the table about halfway through the output. the 
 
 ## Step by Step: Synthesis Problems (Section 5.2)
 
-- In Table 2, we see a brief description of the synthesis problems, including the number of calls to the `stmts` and `guards` generators. This information can be verified by visiting the various `*_syn.java` files for each benchmark.
+In Table 2, we record the number of calls to `stmts` and `guards` for each benchmark. This is not calculated automatically, but can instead be verified manually by inspecting the `*_syn.java` program for each benchmark.
 
-Performance Comparison (Section 5.2)
--------------------------------------
+## Step by Step: Performance Comparison (Section 5.2)
 
-- In Table 2, we also give a performance comparison for mocks versus algebraic specifications.
-- The script that runs this performance comparison is given in the file `test/run_jlibsketch_benchmarks.py`. Note that there are two methods per benchmark, one for the mocks and one for the specifications (denoted `_mock` and `_rewrite` respectively). The Sketch arguments for each are passed as arguments to the `run` method, which runs JLibSketch on the specified problem.
-- While one could just run this script to verify the results, I would not suggest it. Note that 31 trials of each experiment was run, meaning a total of 551 experiments were run. Given that multiple tests take over an hour (and a few even timeout), this would take a very long time. One could reduce the number of trials, but even with just 1 trial, it would likely take many hours to run the experiments. Also note that inter-quartile-range (IQR) for many of the experiments is quite large, meaning performance for an individual test might vary significantly.
-- Note also that we ran the experiments on a fairly powerful machine: 10 cores and 128 GB of RAM, as described in Section 5.2. As a result, while we would not expect the relative performance of mocks versus specifications to change, a significant (though likely proportional) slowing in both approaches may be observed on other machines.
-- To run the benchmarks, one can navigate to `java-sketch/` and run the following command: `python -m test.jlibsketch_benchmarks`
-- Similar to the examples from the Getting Started Guide, this script will output all of the intermediate sketch files in `/result/sk_BENCHMARK` where `BENCHMARK` is the name of the benchmark being run.
-- Additionally, like the Getting Started Guide, the final output from Sketch with the completed synthesis solution can be found in `/result/output/BENCHMARK.txt`.
-- In addition to these files, one can also observe the timing information summarized in two files: `rewrite_results.csv` and `mock_results.csv` which give the runtimes for experiments using rewrites as well as mocks. Runtime for an individual run can also be found at the bottom of `result/output/BENCHMARK.txt`.
-- As running all of the benchmarks is not feasible, we have set up a similar running script, `test/short_jlibsketch_benchmarks.py`. This runs a few of the shorter benchmarks and finished in under 30 minutes on our machine. Run this script with: `python -m test.short_jlibsketch_benchmarks` from `java-sketch/`. Outputs of this result should be accessed in the same way as outputs from the full benchmark testing script.
+
+### Running the Full Benchmark Tests
+
+NOTE: This will take a very long time to run. 31 trials of each experiment was run, meaning this will run a total of 551 experiments, each of which can take up to 4 hours. We would expect running the full benchmark suite will take at least three weeks with a very powerful machine.
+
+To run the full performance comparison from the paper, navigate to `java-sketch` and run the following:
+```
+python -m artifact_scripts.jlibsketch_benchmarks_full
+```
+This will create 2 output files in the `artifact_results/full/` folder:
+
+* `out_mock.txt`: contains timing output for each benchmark using mocks
+* `out_rewrite.txt: contains timing output for each benchmark using specs
+
+Each benchmark is run 31 times. Currently there is no automatic script to read in this information and calculate the statistics from Table 2; this can be done manually if desired.
+
+### Running the Abridged Benchmark Tests
+
+NOTE: We expect this will take at least a day to run, depending on the strength of your machine and the RAM given to the VM.
+
+Here, instead of running 31 trials of each experiment, we run each experiment once. To run, navigate to `java-sketch` and run the following:
+```
+python -m artifact_scripts.jlibsketch_benchmarks_abridged
+```
+Again, this creates 2 output files in `artifact_results/abridged/` folder, the same as described for the full experiments.
+
+One can observe the Sketch output of JLibSketch in `result/` as with the example problem from the Getting Started guide.
+
+Similarly, one can observe the final C++ ouput in `result/output/`. 
+
+### Running the Short Benchmark Tests
+
+NOTE: We expect this should take less than an hour.
+
+Here, we only run the benchmarks that finish in under 10 minutes. To run, navigate to `java-sketch` and run the following:
+```
+python -m artifact_scripts.jlibsketch_benchmarks_short
+```
+Similarly, this creates 2 output files in `artifact_results/short/` and Sketch input and ouput can be viewed in the `result/` folder.
+

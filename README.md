@@ -88,23 +88,64 @@ The first class `Stack` is an `@rewriteClass` used to define one axiom for the s
 
 The second class `ArtifactExample` has one method `mn` which gives the synthesis problem and its harness. It first creates a stack `s` and two objects `o1` and `o2`. It then pushes either `o1` or `o2` onto the stack. Finally, it pops the first element of the stack and asserts that the result is `o2`. JLibSketch must successfully determin that `o2` should be the element pushed onto `s`.
 
-The generated Sketch code for this problem is output to `result/sk_ArtifactExample`,
+The generated Sketch code for this problem is output to `result/sk_ArtifactExample`. In this folder, you will see the following 6 Sketch files:
 
-- In this folder, you will see 6 different Sketch files. `main.sk`, `meta.sk`, and `array.sk` contain Sketch configuration options, class IDs (`__cid` explained in Section 4), and a special Sketch struct for arrays respectively. `Object.sk` includes the `Object` struct described in Section 4, as well as the sketch translation of the `Object` class `.equals` method. The final two files, `ArtifactExample1.sk` and `Foo.sk` contain the Sketch translation of the two classes from `ArtifactExample1.java`.
+* `main.sk`: contains Sketch configuration options
+* `meta.sk`: contains class IDs (`__cid` explained in Section 4)
+* `array.sk`: contains a special Sketch struct for arrays
+* `Object.sk`: contains `Object` struct (described in Section 4) as well as the Sketch translation of the `.equals` method from `Object.java`
+* `Stack.sk`: contains `Stack` Java class Sketch translation
+* `ArtifactExample.sk`: contains `ArtifactExample` Java class Sketch translation
 
-- Now that we've seen what the Sketch input looks like, let's look at the Sketch output. Open the output file: `emacs result/output/ArtifactExample1.txt` (replace `emacs` with whichever text editor you prefer)
+The following contains snippets of the Sketch output in `Stack.sk` to highlight small differences from the paper. To see the full output, view the file `result/sk_ArtifactExample/Stack.sk`.
+```
+Object Stack_Stack() {
+    return new Object(__cid=Stack(), _stack=new Stack_empty());
+}
 
-Basic Running of JLibSketch and Interpretting Output:
+Object push_Object_E(Object self, Object e) {
+    return new Object(__cid=Stack(), _stack=new Push_e(self=self._stack, e=e));
+}
 
-- Now we will run JLibSketch. Consider the example in `test/ArtifactExample2.java`
-- Again, there are two classes. We will start with the bottom one, `Stack`. Notice first that `Stack` has the `@rewriteClass` annotation, meaning it uses algebraic rewriting rules to define its behavior. In this case, it has two methods, `push` and `pop`, both of which are given method declarations with no body and the annotation `@alg`. Descriptions of these annotations are given in Section 2 of the paper (under "Algebraic Specifications using Rewrite Rules"). Below those, we give the rewrite rule, which uses JLibSketch syntax (also explained in Section 2) to give the rewrite rule pop(push!(s, x)) = x. This rule describes the stack behavior that calling `pop()` after `push(x)` results in the value `x`.
-- The top class, `ArtifactExample2` has the `harness` method `mn`, which in this case contains both the synthesis problem and its specification. In this method, a new stack `s` is created as well as two `Object`s `o1` and `o2`. Next, we create another `Object` named `toPush` which we assign to a generator that will choose between `o1` and `o2`. Next, we push `toPush` onto the stack. Finally, we `pop` the top value of the stack and assert that it is equal to `o2`. JLibSketch will choose the appropriate instantiation of `toPush` such that this assertion holds according to the behavior of stack, which in this case will set `toPush` equal to `o2`.
-- To run this example, run the following from `java-sketch`: `./jsk.sh test/ArtifactExample2.java --no-lib model/lang/Object.java`. Note, the `--no-lib` indicates to not include the standard libraries we have implemented by default (to avoid conflict with our Stack implementation) and the `model/lang/Object.java` tells JLibSketch to include our `Object` class implementation.
-- Let's look at the Sketch code generated in `result/sk_ArtifactExample2/`. Just as last time, we have `main.sk`, `meta.sk`, `array.sk`, and `Object.sk` which serve the same purpose. Let's first look at `Stack.sk` which contains the Sketch translation of the `Stack` class. Note that a detailed description of this translation is given in Section 4.
-- Notice first that on lines 3-9 we have our `Stack` adt, which has added a term for method as well as a `!` term for each impure method, denoted by adding a `b` after the name (note that both `push` and `pop` are both impure). This convention is elided for the constructor, for which there is only one term `Stack_empty`.
-- Below this, we have 5 functions, each of which is used as an outside handle for stack functions. Again, each impure function has two handles, one representing return values and one (the `b` functions) representing side-effects on the stack. Note that return value functions (i.e. `push_Object_E`) return a new `Object` struct, while side-effect functions (i.e. `pushb_Object_E` and `popb_Object`) simply update the `__stack` field of the caller with the new stack term. This translation is to preserve aliasing. Notice that `pop_Object` instead calls the `xform_pop_Stack` function, passing it the `Stack` adt argument `self._stack`. Note that we used `rewrite` in the paper for clarity, but here the `xform_pop_Stack` function performs the same rewriting operations as described by the `rewrite` Sketch function in Section 4 (e.g. in Figure 7).
-- The implementation of `xform_pop_Stack` is given on line 57. It does pattern matching on its argument (i.e. the caller of the method in Java). As shown in line 63, if the argument is of type `Pushb_e` (i.e. the call to `pop` was preceded by a call to `push`) we return the value `e`. Notice that any other type in the `switch` statement leads to an `assert false`. This ensures that any behavior not explicity stated by the rewrite rules (e.g. pop(pop!(...))) cannot be used for successful synthesis.
-- Now let's look at `ArtifactExample2.sk`. This translation is mostly straightforward, similiar to `ArtifactExample1.sk`. However, there is one notable difference. On lines 13 and 15, the calls to s.push(toPush) and s.pop() have been translated into two statements. On line 13, he first calls the return value function (which for `push` is not assigned to anything). The second assigns to our stack `s` the result of calling the side-effect function (which as you recall will update `s`'s `_stack` field). The same translation occurs for `pop` on line 15. Note that these calls use the handle functions (`push_Object_E`, `pushb_Object_E`, `pop_Object`, and `popB_Object`) from `Stack.sk`.
+Object pushb_Object_E(Object self, Object e) {
+    self._stack=new Pushb_e(self=self._stack, e=e);
+    return self;
+}
+
+Object popb_Object(Object self) {
+    self._stack=new Popb(self=self._stack);
+    return self;
+}
+
+Object pop_Object(Object self) {
+    return xform_pop_Stack(self._stack);
+}
+
+Object xform_pop_Stack(Stack selff) {
+  Stack self = selff;
+  switch(self) {
+  case Stack_empty: { assert false; }
+  case Push_e: { assert false; }
+  case Pushb_e: {
+    return self.e;
+  }
+  case Popb: { assert false; }
+  case Pop: { assert false; }
+  }
+
+  return null;
+}
+```
+This Sketch translation is described in Section 4. One difference to note is that instead of the `rewrite_` notation from the paper, we use `xform_` instead. Additionally, Java methods are translated to Sketch methods containing the argument types to handle method overloading, which were elided from the paper examples for readability. Finally, note that Sketch requires a return value from the function outside of the `switch` statement, hence the `return null` for `xform_pop_Stack`.
+
+The following contains a snippet of the Sketch output in `ArtifactExample.sk` to highlight one small difference from the paper. To see the full output, view the file `result/sk_ArtifactExample/ArtifactExample.sk`.
+```
+assert (popped.__cid == Stack() ? equals_Object@Object(popped, o2) : popped.__cid == ArtifactExample2() ? equals_Object@Object(popped, o2) : popped.__cid == Object() ? equals_Object@Object(popped, o2) : 0);
+```
+The above snippet contains the Sketch translation of the call to `assert popped.equals(o2);`. Note that this call is translated into a conditional which checks the class ID of the receiver. This is used to encode dynamic dispatch, which was elided from the paper for readability.
+
+
+
 - Let's look at the C++ output. The output is written to `result/output/ArtifactExample2.txt`. Open that file as before.
 - Similar to `ArtifactExample1.txt` there is some Sketch stuff at the top that can be ignored. Skip to line 8 where the C++ translation of `mn_int` from the `ArtifactExample2.sk` file is given. We can see we create the stack `s` which has been renmaed to `s_s6` (line 15). Similarly, we create `o1` and `o2` as `o1_s10` and `o2_s14` respectively (lines 19 and 23). The temporary variable `toPush` has been optimized away. However, we can see the calls to `push_Object_E` and `pushb_Object_E` both have `o2_s14` as the second argument, indicating Sketch correctly assigned `toPush` to `o2`.
 

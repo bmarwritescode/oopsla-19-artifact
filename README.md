@@ -317,6 +317,7 @@ In Table 2, we record the number of calls to `stmts` and `guards` for each bench
 
 ## Step by Step: Performance Comparison (Section 5.2)
 
+Performance on the benchmarks may vary significantly depending on the power of the machine used. However, we expect that the comparative difference between mocks and algebraic specifications should remain the same. One should also note that there is significant variance for some of the benchmarks (see IQRs from Table 2 in the paper), which means that running the "Abridged" or "Short" tests could result in performance that varies somewhat significantly from the median reported in the paper (bolded in Table 2).
 
 ### Running the Full Benchmark Tests
 

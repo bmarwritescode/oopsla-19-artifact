@@ -144,10 +144,109 @@ assert (popped.__cid == Stack() ? equals_Object@Object(popped, o2) : popped.__ci
 ```
 The above snippet contains the Sketch translation of the call to `assert popped.equals(o2);`. Note that this call is translated into a conditional which checks the class ID of the receiver. This is used to encode dynamic dispatch, which was elided from the paper for readability.
 
+Below, we give Sketch's C++ output for the `mn` function from `ArtifactExample.java`. To view the full Sketch output, look at `result/output/ArtifactExample.txt`.
+```
+void mn_int (int x)/*Artifac..ample2.sk:7*/
+  {
+    int self_s2 = 0;
+    Object@meta(self_s2);
+    Object@Object self_s4 = null;
+    Object_Object@Object(new Object@Object(__cid=self_s2), self_s4)//{};
+    Object@Object s_s6 = null;
+    Stack_Stack@Stack(s_s6);
+    int o1_s8 = 0;
+    Object@meta(o1_s8);
+    Object@Object o1_s10 = null;
+    Object_Object@Object(new Object@Object(__cid=o1_s8), o1_s10)//{};
+    int o2_s12 = 0;
+    Object@meta(o2_s12);
+    Object@Object o2_s14 = null;
+    Object_Object@Object(new Object@Object(__cid=o2_s12), o2_s14)//{};
+    int _out_s16 = 0;
+    Stack@meta(_out_s16);
+    if((s_s6.__cid) == _out_s16)/*Artifac..ample2.sk:13*/
+    {
+      Object@Object _out_s19 = null;
+      push_Object_E@Stack(s_s6, o2_s14, _out_s19);
+    }
+    int s_s21 = 0;
+    Stack@meta(s_s21);
+    Object@Object _pac_sc_s22 = null;
+    if((s_s6.__cid) == s_s21)/*Artifac..ample2.sk:13*/
+    {
+      Object@Object s_s24 = null;
+      pushb_Object_E@Stack(s_s6, o2_s14, s_s24);
+      _pac_sc_s22 = s_s24;
+    }
+    else
+    {
+      _pac_sc_s22 = null;
+    }
+    int popped_s26 = 0;
+    Stack@meta(popped_s26);
+    Object@Object _pac_sc_s27 = null;
+    if((_pac_sc_s22.__cid) == popped_s26)/*Artifac..ample2.sk:14*/
+    {
+      Object@Object popped_s29 = null;
+      pop_Object@Stack(_pac_sc_s22, popped_s29);
+      _pac_sc_s27 = popped_s29;
+    }
+    else
+    {
+      _pac_sc_s27 = null;
+    }
+    int s_s31 = 0;
+    Stack@meta(s_s31);
+    if((_pac_sc_s22.__cid) == s_s31)/*Artifac..ample2.sk:14*/
+    {
+      Object@Object s_s34 = null;
+      popb_Object@Stack(_pac_sc_s22, s_s34);
+    }
+    int _out_s36 = 0;
+    Stack@meta(_out_s36);
+    bit _pac_sc_s37 = 0;
+    if((_pac_sc_s27.__cid) == _out_s36)/*Artifac..ample2.sk:15*/
+    {
+      bit _out_s39 = 0;
+      equals_Object@Object(_pac_sc_s27, o2_s14, _out_s39);
+      _pac_sc_s37 = _out_s39;
+    }
+    else
+    {
+      int _out_s41 = 0;
+      ArtifactExample2@meta(_out_s41);
+      bit _pac_sc_s42 = 0;
+      if((_pac_sc_s27.__cid) == _out_s41)/*Artifac..ample2.sk:15*/
+      {
+        bit _out_s44 = 0;
+        equals_Object@Object(_pac_sc_s27, o2_s14, _out_s44);
+        _pac_sc_s42 = _out_s44;
+      }
+      else
+      {
+        int _out_s46 = 0;
+        Object@meta(_out_s46);
+        bit _pac_sc_s47 = 0;
+        if((_pac_sc_s27.__cid) == _out_s46)/*Artifac..ample2.sk:15*/
+        {
+          bit _out_s49 = 0;
+          equals_Object@Object(_pac_sc_s27, o2_s14, _out_s49);
+          _pac_sc_s47 = _out_s49;
+        }
+        else
+        {
+          _pac_sc_s47 = 0;
+        }
+        _pac_sc_s42 = _pac_sc_s47;
+      }
+      _pac_sc_s37 = _pac_sc_s42;
+    }
+    assert (_pac_sc_s37); //Assert at Artifac..ample2.sk:15 (0)
+  }
+  /*Artifac..ample2.sk:7*/
+```
 
-
-- Let's look at the C++ output. The output is written to `result/output/ArtifactExample2.txt`. Open that file as before.
-- Similar to `ArtifactExample1.txt` there is some Sketch stuff at the top that can be ignored. Skip to line 8 where the C++ translation of `mn_int` from the `ArtifactExample2.sk` file is given. We can see we create the stack `s` which has been renmaed to `s_s6` (line 15). Similarly, we create `o1` and `o2` as `o1_s10` and `o2_s14` respectively (lines 19 and 23). The temporary variable `toPush` has been optimized away. However, we can see the calls to `push_Object_E` and `pushb_Object_E` both have `o2_s14` as the second argument, indicating Sketch correctly assigned `toPush` to `o2`.
+In general, parsing the final Sketch output can be a little challenging. In this case, we can see we create the stack `s` (renamed to `s_s6`) and `o1` and `o2` (renamed to `o1_s10` and `o2_s14`). The temporary variable `toPush` was optimized away by Sketch, however, we can see the calls to `push_Object_E` and `pushb_Object_E` both have `o2_s14` as the second argument, indicating Sketch correctly assigned `toPush` to `o2`.
 
 Step By Step Instructions: Program Synthesis with Algebraic Library Specifications
 -----------------------------------------------------------------------------------

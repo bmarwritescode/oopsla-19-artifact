@@ -67,8 +67,8 @@ class TestJava(TestCommon):
         return results
 
     def test_runMocks(self):
-        tmp_output = open(os.path.join('artifact_results', 'full', 'out_mock.txt'), 'w')        
-        mockResults = open(os.path.join('artifact_results', 'full', 'results_mock.csv'), 'w')
+        tmp_output = open(os.path.join('artifact_results', 'abridged', 'out_mock.txt'), 'w')        
+        mockResults = open(os.path.join('artifact_results', 'abridged', 'results_mock.csv'), 'w')
         writer = csv.writer(mockResults)
         mockTests = [
             (self.run_CipherFactoryMock, 'CipherFactoryTests'),   
@@ -86,8 +86,8 @@ class TestJava(TestCommon):
         mockResults.close()
 
     def test_runRewrites(self):
-        tmp_output = open(os.path.join('artifact_results', 'full', 'out_rewrite.txt'), 'w')                
-        mockResults = open(os.path.join('artifact_results', 'full', 'results_rewrite.csv'), 'w')
+        tmp_output = open(os.path.join('artifact_results', 'abridged', 'out_rewrite.txt'), 'w')                
+        mockResults = open(os.path.join('artifact_results', 'abridged', 'results_rewrite.csv'), 'w')
         writer = csv.writer(mockResults)
         rewriteTests = [
             (self.run_CipherFactoryRewrite, 'CipherFactoryTests'),

@@ -327,7 +327,7 @@ see the documentation for details.
 Please credit this data as "generated using David A. Wheeler's 'SLOCCount'."
 ```
 
-The LOC information is given in the table about halfway through the output. the first row gives the LOC, the second the directory, and the third the LOC by language (which is the same as the LOC as there is only Java). We are interested in the first and last lines, which report that `SuffixArray` has `399` LOC for mocks and `225` LOC for rewrites (algebraic specifications).
+The LOC information is given in the table about halfway through the output. the first row gives the LOC, the second the directory, and the third the LOC by language (which is the same as the LOC as there is only Java). We are interested in the first and last rows, which report that `SuffixArray` has `399` LOC for mocks and `225` LOC for rewrites (algebraic specifications).
 
 **NOTE**: We accidentally reported the LOC comparison incorrectly for the `CipherFactory` benchmark. In Table 1, we reported that it had 512 lines of specifications and 799 lines of mocks, to yield a ratio of 0.64 specifications to mocks. However, it actually has 120 lines of specifications and 329 lines of mocks, yielding a ratio of 0.36 specifications to mocks. We will fix this mistake in the next submission for the paper.
 

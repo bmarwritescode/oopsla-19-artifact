@@ -1,0 +1,42 @@
+Have a non-directory at the top, so creating directory top_dir
+Adding /Users/grumpy/Research/tmp/benchmarks/HashMap2//Bucketing.java to top_dir
+Adding /Users/grumpy/Research/tmp/benchmarks/HashMap2//BucketingTest.java to top_dir
+Adding /Users/grumpy/Research/tmp/benchmarks/HashMap2//Bucketing_syn.java to top_dir
+Adding /Users/grumpy/Research/tmp/benchmarks/HashMap2//HashTable.java to top_dir
+Adding /Users/grumpy/Research/tmp/benchmarks/HashMap2//Pair.java to top_dir
+Creating filelist for mock
+Creating filelist for rewrite
+Creating filelist for shared
+Categorizing files.
+Finding a working MD5 command....
+Found a working MD5 command.
+Computing results.
+
+
+SLOC	Directory	SLOC-by-Language (Sorted)
+453     top_dir         java=453
+320     shared          java=320
+122     mock            java=122
+41      rewrite         java=41
+
+
+Totals grouped by language (dominant language first):
+java:           936 (100.00%)
+
+
+
+
+Total Physical Source Lines of Code (SLOC)                = 936
+Development Effort Estimate, Person-Years (Person-Months) = 0.19 (2.24)
+ (Basic COCOMO model, Person-Months = 2.4 * (KSLOC**1.05))
+Schedule Estimate, Years (Months)                         = 0.28 (3.40)
+ (Basic COCOMO model, Months = 2.5 * (person-months**0.38))
+Estimated Average Number of Developers (Effort/Schedule)  = 0.66
+Total Estimated Cost to Develop                           = $ 25,205
+ (average salary = $56,286/year, overhead = 2.40).
+SLOCCount, Copyright (C) 2001-2004 David A. Wheeler
+SLOCCount is Open Source Software/Free Software, licensed under the GNU GPL.
+SLOCCount comes with ABSOLUTELY NO WARRANTY, and you are welcome to
+redistribute it under certain conditions as specified by the GNU GPL license;
+see the documentation for details.
+Please credit this data as "generated using David A. Wheeler's 'SLOCCount'."

@@ -1,0 +1,47 @@
+Have a non-directory at the top, so creating directory top_dir
+Adding /Users/grumpy/Research/tmp/benchmarks/CipherFactory//CipherFactoryTester.java to top_dir
+Adding /Users/grumpy/Research/tmp/benchmarks/CipherFactory//ConfigurableCipherFactory.java to top_dir
+Adding /Users/grumpy/Research/tmp/benchmarks/CipherFactory//CryptoManager_mock.java to top_dir
+Adding /Users/grumpy/Research/tmp/benchmarks/CipherFactory//CryptoManager_rewrite.java to top_dir
+Adding /Users/grumpy/Research/tmp/benchmarks/CipherFactory//CryptoManager_syn_mock.java to top_dir
+Adding /Users/grumpy/Research/tmp/benchmarks/CipherFactory//CryptoManager_syn_rewrite.java to top_dir
+Adding /Users/grumpy/Research/tmp/benchmarks/CipherFactory//DefaultCipherFactory_mock.java to top_dir
+Adding /Users/grumpy/Research/tmp/benchmarks/CipherFactory//DefaultCipherFactory_rewrite.java to top_dir
+Adding /Users/grumpy/Research/tmp/benchmarks/CipherFactory//ICipherFactory.java to top_dir
+Adding /Users/grumpy/Research/tmp/benchmarks/CipherFactory//ICryptoManager.java to top_dir
+Creating filelist for mock
+Creating filelist for rewrite
+Creating filelist for shared
+Categorizing files.
+Finding a working MD5 command....
+Found a working MD5 command.
+Computing results.
+
+
+SLOC	Directory	SLOC-by-Language (Sorted)
+735     top_dir         java=735
+372     shared          java=372
+329     mock            java=329
+120     rewrite         java=120
+
+
+Totals grouped by language (dominant language first):
+java:          1556 (100.00%)
+
+
+
+
+Total Physical Source Lines of Code (SLOC)                = 1,556
+Development Effort Estimate, Person-Years (Person-Months) = 0.32 (3.82)
+ (Basic COCOMO model, Person-Months = 2.4 * (KSLOC**1.05))
+Schedule Estimate, Years (Months)                         = 0.35 (4.16)
+ (Basic COCOMO model, Months = 2.5 * (person-months**0.38))
+Estimated Average Number of Developers (Effort/Schedule)  = 0.92
+Total Estimated Cost to Develop                           = $ 42,979
+ (average salary = $56,286/year, overhead = 2.40).
+SLOCCount, Copyright (C) 2001-2004 David A. Wheeler
+SLOCCount is Open Source Software/Free Software, licensed under the GNU GPL.
+SLOCCount comes with ABSOLUTELY NO WARRANTY, and you are welcome to
+redistribute it under certain conditions as specified by the GNU GPL license;
+see the documentation for details.
+Please credit this data as "generated using David A. Wheeler's 'SLOCCount'."

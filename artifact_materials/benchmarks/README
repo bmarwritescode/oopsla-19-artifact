@@ -1,0 +1,5 @@
+-----------------
+This directory contains the benchmarks from our paper. Each folder contains a different benchmark. For each benchmark, the synthesis problem is contained in the file denoted "NAME_syn.java" while the solution is simply "NAME.java". All shared libraries (that is libraries used with both specs and mocks) are contained in the shared/ folder. All specs are contained in the rewrite/ folder, and all mocks are contained in the mocks/ folder.
+
+For the cryptography examples, please note the "_mock" and "_rewrite" naming scheme which differentiates the versions used for mocks and rewrites. This was necessary due to annotations, as discussed in the paper.
+-----------------

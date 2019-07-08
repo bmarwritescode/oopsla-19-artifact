@@ -2,6 +2,7 @@
 
 ## Getting Started: Requirements
 
+* [VirtualBox](https://www.virtualbox.org/).
 * [Vagrant](https://www.vagrantup.com/).
 
 ## Getting Started: Setup

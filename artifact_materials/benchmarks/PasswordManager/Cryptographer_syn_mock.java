@@ -39,30 +39,6 @@ public class Cryptographer {
 	    Object[] localObjs = new Object[2];
 
 	    stmts(localObjs);
-
-	    // SecureRandom random = new SecureRandom();
-
-	    // byte[] randomKey = new byte[16];
-	    // random.nextBytes(randomKey);
-
-	    // GCMSecretKey = new SecretKeySpec(randomKey, "AES");
-
-	    // randomIv = new byte[16];
-	    // random.nextBytes(randomIv);
-	    // ivParameterSpec = new IvParameterSpec(randomIv);
-
-	    // myCypherOut = Cipher.getInstance("AES/GCM/NoPadding", "BC");
-	    // // // myCypherOut.init(Cipher.DECRYPT_MODE, GCMSecretKey,ivParameterSpec);
-	    // myCypherOut.init(2, GCMSecretKey,ivParameterSpec);
-
-	    // // init HMAC
-	    // String secret = "secret";
-	    // sha256_HMAC = Mac.getInstance("HmacSHA256");
-	    // Hash_secret_key = new SecretKeySpec(secret.getBytes(), "HmacSHA256");
-	    // sha256_HMAC.init(Hash_secret_key);
-
-	    // MAX_LENGTH_PASSWORD = 16;
-	    
 	}
 
     	public String hash(String plainTxt) {
@@ -166,21 +142,11 @@ public class Cryptographer {
 	localObjs[0] = plainText;
 
 	stmts(localObjs);
-	// myCypherOut.init(1, GCMSecretKey, ivParameterSpec);
 		
 	return genString(localObjs);
-	// byte[] bs = myCypherOut.doFinal(plainText.getBytes());
-	// return new String(bs);
     }
     
-    // public String decrypt(String cipherText) {
     public String decrypt(String plainText) {	
-	// myCypherOut.init(2, GCMSecretKey,ivParameterSpec);
-	// byte[] plainText = myCypherOut.doFinal(cipherText.getBytes());
-	// String decryptText = new String(plainText);  			
-
-	// return decryptText;
-	
 	Object[] localObjs = new Object[2];
 	localObjs[0] = plainText;
 

@@ -165,7 +165,6 @@ class SuffixArray {
 
 	for (int i=0; i<T.length; i++) {	    
 	    stmts(localInts, localObjs, i, tmp);
-	    // tmp[i] = (char) T[i];
 	}
 
 	for (int i=0; i<T.length; i++) {	    	    
@@ -174,15 +173,9 @@ class SuffixArray {
 
 	    if (comp1) {
 	    	if (comp2) {
-	    // TreeSet<String> lrss = (TreeSet) localObjs[0];
-	    // if (lcp[i] > 0 && lcp[i] >= localInts[0]) {
-	    // 	if (lcp[i] > localInts[0]) {
-	    // 	    lrss.clear();
 		    stmts(localInts, localObjs, i, tmp);
 		}
 		stmts(localInts, localObjs, i, tmp);
-		// localInts[0] = lcp[i];
-		// lrss.add(new String(tmp, sa[i], localInts[0]));
 	    }
 	}
 

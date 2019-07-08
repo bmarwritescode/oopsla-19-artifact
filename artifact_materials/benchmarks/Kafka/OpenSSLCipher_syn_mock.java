@@ -200,16 +200,6 @@ public class OpenSSLCipher implements ICipher {
 	localObjs[2] = new Bytes(IV);
 	localObjs[3] = new Bytes(new byte[1]);
 
-	// localObjs[4] = getCipher(isEncryption, key, IV);
-	// Cipher cipher = (Cipher) localObjs[4];
-	// Bytes blah = localObjs[3];
-	// byte[] output = blah.toArray();
-	// localInts[0] = cipher.update(data, 0, 1, output, 0);
-	// localInts[1] = cipher.doFinal(data, 0, 0, output, localInts[0]);
-	// Cipher c = (Cipher) localObjs[4];
-	// byte[] blah2 = c.doFinal(data);
-	// return Arrays.copyOf(blah2, localInts[0]+localInts[1]);
-
 	stmts(localInts, localBools, localObjs);	
 
 	return genRet(localInts, localBools, localObjs);	

@@ -28,15 +28,8 @@ public class CommunicationWithFiles {
     }
     
     generator public void stmts() {
-	// if (??) {
-	//     if (guard()) {
-	// 	stmts();
-	//     }
-	// }
 	if (??) {
 	    values.sort(null);
-	    // fr = new FileReaderr(filename);
-	    // bfr = new BufferedReader(fr);
 	}
 	if (??) {
 	    fr = new FileReaderr(filename);
@@ -50,18 +43,6 @@ public class CommunicationWithFiles {
 	if (??) {
 	    fr.close();
 	}
-	// if (??) {
-	//     // vbar = value.concat("|");
-	//     // values.add(vbar.concat(filename));
-	//     vbar = value.concat("|");
-	// }
-	// if (??) {
-	//     vbar = vbar.concat(filename);	    
-	// }
-	
-	// if (??) {
-	//     stmts();
-	// }
     }
 
         /**
@@ -77,31 +58,20 @@ public class CommunicationWithFiles {
 		isAList = isAList2;
 		filename = filename2;
 		
-		// values.sort(null);
-		// fr = new FileReaderr(filename);
-		// bfr = new BufferedReader(fr);
+		stmts();
+		stmts();
+		stmts();
+		stmts();
 
-		stmts();
-		stmts();
-		stmts();
-		stmts();
-		
-		// value = bfr.readLine();
-		
-		// stmts();
 		while(value != null) {
 		    if (!isAList == true) {
-			// stmts();
-			// stmts();
 			vbar = value.concat("|");			
 			vbar = vbar.concat(filename);
 			values.add(vbar);
 		    }
-		    // value = bfr.readLine();
 		    stmts();		    
 		}
 
-		// fr.close();
 		stmts();
 		stmts();		
 		

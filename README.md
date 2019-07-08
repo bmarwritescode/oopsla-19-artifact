@@ -343,7 +343,7 @@ vagrant halt
 vagrant up
 vagrant ssh
 ```
-In our experience, with 7 GB of RAM, we do not expect to encounter any of the freezing behaviour running the "short" tests. Running the "abridged" and "full" tests did cause this for us on some runs. 
+In our experience, with 7 GB of RAM, we do not expect to encounter any of the freezing behaviour running the "short" tests. Running the "abridged" and "full" tests did cause freezing for us on some runs. 
 
 One should also note that there is significant variance for some of the benchmarks (see IQRs from Table 2 in the paper), which means that running the "Abridged" or "Short" tests could result in performance that varies somewhat significantly from the median reported in the paper (bolded in Table 2).
 

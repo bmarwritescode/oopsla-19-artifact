@@ -6,16 +6,22 @@
 
 ## Getting Started: Setup
 
-To use Vagrant to produce a VM, simply clone and navigate into this repo, and call `vagrant up`:
+To use Vagrant to produce a VM, first clone and navigate into this repo.:
 ```
 git clone https://github.com/bmarwritescode/oopsla-19-artifact.git
 cd oopsla-19-artifact
-vagrant up              # Build the VM
+```
+
+Now, fetch the tar file for [Sketch](https://drive.google.com/file/d/1Cq3M0jFFZ-dAWtNfb_OAl-BN_iI5VB69/view?usp=sharing) and copy it into the `oopsla-19-artifact` folder.
+
+Now, simply call the following to build the machine
+```
+vagrant up
 ```
 
 This build should take approximately 30-40 minutes to complete. After this, you can call `vagrant ssh` from within the same directory to access the VM.
 
-**NOTE**: By default, we build the VM with 7 GB of RAM. This may be a lot for some computers, but without this much, many of the benchmarks fail. If you need to change this, edit `Vagrantfile` changing the following section with the desired memory in KB prior to running `vagrant up`.
+**NOTE**: By default, we build the VM with 7 GB of RAM. This may be a lot for some computers, but without this much, many of the benchmarks fail. If you need to change this, edit `Vagrantfile` changing the following section with the desired memory in KB prior to running `vagrant up`. If you have already run `vagrant up`, you can exit the VM, make the change, run `vagrant halt`, followed by `vagrant up` and the memory change should take place.
 ```
   config.vm.provider "virtualbox" do |vb|
     # Customize the amount of memory on the VM:
@@ -328,6 +334,8 @@ In Table 2, we record the number of calls to `stmts` and `guards` for each bench
 ## Step by Step: Performance Comparison (Section 5.2)
 
 Performance on the benchmarks may vary significantly depending on the power of the machine used. However, we expect that the comparative difference between mocks and algebraic specifications should remain the same. One should also note that there is significant variance for some of the benchmarks (see IQRs from Table 2 in the paper), which means that running the "Abridged" or "Short" tests could result in performance that varies somewhat significantly from the median reported in the paper (bolded in Table 2).
+
+Additionally, we found that the memory limitations of the VM had impact on some of the benchmarks. In particular, we noticed that three mock benchmarks (`SuffixArray`, `PasswordManager`, and `Kafka`) all died earlier than the Sketch time out we expected. We suspect the cause of this is the reduced memory of the VM (our testing machine has 128 GB RAM). Additionally, lowering the RAM below 7 GB affected other tests, including mo`RomList` for both as well as `PasswordManager` and `Kafka` for rewrite.
 
 Note that times reported in output files are in millesconds and not in seconds, as reported in the paper.
 

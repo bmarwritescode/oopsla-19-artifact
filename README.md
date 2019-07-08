@@ -12,7 +12,7 @@ git clone https://github.com/bmarwritescode/oopsla-19-artifact.git
 cd oopsla-19-artifact
 ```
 
-Now, fetch the tar file for [Sketch](https://drive.google.com/file/d/1Cq3M0jFFZ-dAWtNfb_OAl-BN_iI5VB69/view?usp=sharing) and copy it into the `oopsla-19-artifact` folder.
+Now, fetch the tar file for [Sketch](https://drive.google.com/file/d/1Cq3M0jFFZ-dAWtNfb_OAl-BN_iI5VB69/view?usp=sharing) and copy it into the `oopsla-19-artifact` folder. Make sure the file is named `sketch.tar.gz`.
 
 Now, simply call the following to build the machine
 ```

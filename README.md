@@ -394,7 +394,7 @@ Similarly, one can observe the final C++ ouput in `result/output/`.
 
 NOTE: We expect this should take less than an hour.
 
-Here, we only run the benchmarks that finish in under 10 minutes. To run, navigate to `java-sketch` and run the following:
+Here, we only run the benchmarks whose median runtime reported in the paper is under 10 minutes. For this test, we set a timeout at 20 minutes. To run, navigate to `java-sketch` and run the following:
 ```
 python -m artifact_scripts.jlibsketch_benchmarks_short
 ```

@@ -35,9 +35,10 @@ This build should take approximately 30-40 minutes to complete. After this, you 
 
 The VM includes both JSketch (with JLibSketch add-on) and Sketch.
 
-In the home directory, there is one file and two folders:
+In the home directory, there aret two files and two folders:
 
 * `mysql-apt-config_0.7.2-1_all.deb`: contains setup materials for the VM (ignore this file)
+* `sketch.tar.gz`: tar file for Sketch source code (ignore this file)
 * `sketch/`: houses the Sketch source code (ignore this folder)
 * `java-sketch/`: houses JSketch and the JLibSketch add-on
 
@@ -90,11 +91,11 @@ class ArtifactExample {
 	Object o1 = new Object();
 	Object o2 = new Object();
 
-	# Push either o1 or o2 onto the stack
+	// Push either o1 or o2 onto the stack
 	Object toPush = {| o1, o2 |};
 	s.push(toPush);
 
-	# Assert that the top element on the stack is o2
+	// Assert that the top element on the stack is o2
 	Object popped = s.pop();
 	assert popped.equals(o2);
     }
@@ -103,7 +104,7 @@ class ArtifactExample {
 
 The first class `Stack` is an `@rewriteClass` used to define one axiom for the stack data structure: `pop(push!(s, x)) = x`. This syntax is explained in Section 2 of the paper.
 
-The second class `ArtifactExample` has one method `mn` which gives the synthesis problem and its harness. It first creates a stack `s` and two objects `o1` and `o2`. It then pushes either `o1` or `o2` onto the stack. Finally, it pops the first element of the stack and asserts that the result is `o2`. JLibSketch must successfully determin that `o2` should be the element pushed onto `s`.
+The second class `ArtifactExample` has one method `mn` which gives the synthesis problem and its harness. It first creates a stack `s` and two objects `o1` and `o2`. It then pushes either `o1` or `o2` onto the stack. Finally, it pops the first element off the stack and asserts that the result is `o2`. JLibSketch must successfully determine that `o2` should be the element pushed onto `s`.
 
 The generated Sketch code for this problem is output to `result/sk_ArtifactExample`. In this folder, you will see the following 6 Sketch files:
 
@@ -271,7 +272,7 @@ As mentioned before, the benchmarks from the paper (described in Table 1) can be
 
 In this directory, each folder contains a different benchmark. For each benchmark, the synthesis problem is contained in the file denoted "NAME_syn.java" while the solution is simply "NAME.java". All shared libraries (that is libraries used with both specs and mocks) are contained in the `shared/` folder. All specs are contained in the `rewrite/` folder, and all mocks are contained in the `mocks/` folder.
 
-For the cryptography examples, please note the "_mock" and "_rewrite" naming scheme which differentiates the versions used for mocks and rewrites. This was necessary due to annotations, as discussed in Section 4 of the paper.
+For the cryptography examples, please note the "_mock" and "_rewrite" naming scheme which differentiates the versions used for mocks and rewrites. This was necessary due to boxing annotations, as discussed in Section 4 of the paper.
 
 ## Step by Step: LOC Comparison (Section 5.1)
 

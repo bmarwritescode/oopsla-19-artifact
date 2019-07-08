@@ -347,7 +347,7 @@ In our experience, with 7 GB of RAM, we do not expect to encounter any of the fr
 
 One should also note that there is significant variance for some of the benchmarks (see IQRs from Table 2 in the paper), which means that running the "Abridged" or "Short" tests could result in performance that varies somewhat significantly from the median reported in the paper (bolded in Table 2).
 
-Note that times reported in output files are in millesconds and not in seconds, as reported in the paper. Also note the names reported for each benchmark are slightly different than the names. Most should be straightforward, but for clarity, the following is the mapping from benchmark to name reported in the output files:
+Note that times reported in output files are in millesconds and not in seconds, as reported in the paper. Also note the names reported for each benchmark in the output are slightly different than the names used throughout the paper. Most should be straightforward, but for clarity, the following is the mapping from benchmark to name reported in the output files:
 
 * `SuffixArray`: SuffixArrayTest
 * `HashMap1`: HashTableTest

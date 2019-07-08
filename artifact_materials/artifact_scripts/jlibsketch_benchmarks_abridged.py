@@ -46,7 +46,7 @@ class TestJava(TestCommon):
                     if int(time) > timeout*60*1000:
                         time_outs += 1
                         time += " (TIMEOUT!)"
-                    else if result != 0:
+                    elif result != 0:
                         time += " (ERROR!)"
                     results[k].append(time)
                     output.close()

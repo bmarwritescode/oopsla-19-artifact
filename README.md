@@ -339,7 +339,13 @@ As reported in Table 2, many of our tests take quite a while to run (and this is
 
 Performance on the benchmarks may vary significantly depending on the power of the machine used. However, we expect that the comparative difference between mocks and algebraic specifications should remain roughly the same.
 
-However, we found that the memory limitations of the VM had impact on some of the benchmarks. In particular, we noticed that three mock benchmarks (`SuffixArray`, `PasswordManager`, and `Kafka`) all died earlier than the Sketch time out we expected. We suspect the cause of this is the VM running out of memory. Additionally, lowering the RAM below 7 GB affected other tests, including `RomList` as well as `PasswordManager`, `Kafka`, and `HashMap1` for rewrite.
+However, we found that the memory limitations of the VM had impact on some of the benchmarks. In particular, we noticed that three mock benchmarks (`SuffixArray`, `PasswordManager`, and `Kafka`) all died earlier than the Sketch time out we expected. We suspect the cause of this is the VM running out of memory. Additionally, lowering the RAM below 7 GB affected other tests, including `RomList` as well as `PasswordManager`, `Kafka`, and `HashMap1` for rewrite. On some occasions, sketch running out of memory caused the VM to freeze, and required restarting the VM by exiting, and then running the following.
+```
+vagrant halt
+vagrant up
+vagrant ssh
+```
+In our experience, with 7 GB of RAM, we do not expect to encounter any of the freezing behaviour running the "short" tests. Running the "abridged" and "full" tests did cause this for us on some runs. 
 
 One should also note that there is significant variance for some of the benchmarks (see IQRs from Table 2 in the paper), which means that running the "Abridged" or "Short" tests could result in performance that varies somewhat significantly from the median reported in the paper (bolded in Table 2).
 
@@ -374,7 +380,7 @@ Each benchmark is run 31 times. Currently there is no automatic script to read i
 
 ### Running the Abridged Benchmark Tests
 
-NOTE: We expect this will take at least a day to run, depending on the strength of your machine and the RAM given to the VM.
+NOTE: We expect this will take at least 24 hours to run, depending on the strength of your machine and the RAM given to the VM.
 
 Here, instead of running 31 trials of each experiment, we run each experiment once. To run, navigate to `java-sketch` and run the following:
 ```

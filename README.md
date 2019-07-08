@@ -335,11 +335,23 @@ In Table 2, we record the number of calls to `stmts` and `guards` for each bench
 
 ## Step by Step: Performance Comparison (Section 5.2)
 
+As reported in Table 2, many of our tests take quite a while to run (and this is with 128 GB of RAM and 10 CPUs!). As a result, we provide three tests to run: the full benchmarks from the paper, an abridged version, and a short version. We expect that running the full benchmark suite could take many weeks, running the abridged version shouldn't take longer than 36 hours, and the short version should take about an hour. More information is given for each of these in the subsections below.
+
 Performance on the benchmarks may vary significantly depending on the power of the machine used. However, we expect that the comparative difference between mocks and algebraic specifications should remain the same. One should also note that there is significant variance for some of the benchmarks (see IQRs from Table 2 in the paper), which means that running the "Abridged" or "Short" tests could result in performance that varies somewhat significantly from the median reported in the paper (bolded in Table 2).
 
-Additionally, we found that the memory limitations of the VM had impact on some of the benchmarks. In particular, we noticed that three mock benchmarks (`SuffixArray`, `PasswordManager`, and `Kafka`) all died earlier than the Sketch time out we expected. We suspect the cause of this is the reduced memory of the VM (our testing machine has 128 GB RAM). Additionally, lowering the RAM below 7 GB affected other tests, including mo`RomList` for both as well as `PasswordManager` and `Kafka` for rewrite.
+Additionally, we found that the memory limitations of the VM had impact on some of the benchmarks. In particular, we noticed that three mock benchmarks (`SuffixArray`, `PasswordManager`, and `Kafka`) all died earlier than the Sketch time out we expected. We suspect the cause of this is the VM running out of memory. Additionally, lowering the RAM below 7 GB affected other tests, including `RomList` for both as well as `PasswordManager` and `Kafka` for rewrite.
 
-Note that times reported in output files are in millesconds and not in seconds, as reported in the paper.
+Note that times reported in output files are in millesconds and not in seconds, as reported in the paper. Also note the names reported for each benchmark are slightly different than the names. Most should be straightforward, but for clarity, the following is the mapping from benchmark to name reported in the output files:
+
+* `SuffixArray`: SuffixArrayTest
+* `HashMap1`: HashTableTest
+* `HashMap2`: BucketingTest
+* `PasswordManager`: PasswordManagerTest
+* `CipherFactory`: CipherFactoryTests
+* `Kafka`: Kafka_Tester
+* `EasyCSV`: CSVTester
+* `RomList`: RomListTester
+* `Comparator`: Comparator
 
 ### Running the Full Benchmark Tests
 

@@ -331,10 +331,6 @@ The LOC information is given in the table about halfway through the output. the 
 
 **NOTE**: We accidentally reported the LOC comparison incorrectly for the `CipherFactory` benchmark. In Table 1, we reported that it had 512 lines of specifications and 799 lines of mocks, to yield a ratio of 0.64 specifications to mocks. However, it actually has 120 lines of specifications and 329 lines of mocks, yielding a ratio of 0.36 specifications to mocks. We will fix this mistake in the next submission for the paper.
 
-## Step by Step: Synthesis Problems (Section 5.2)
-
-In Table 2, we record the number of calls to `stmts` and `guards` for each benchmark. This is not calculated automatically, but can instead be verified manually by inspecting the `*_syn.java` program for each benchmark.
-
 ## Step by Step: Performance Comparison (Section 5.2)
 
 As reported in Table 2, many of our tests take quite a while to run (and this is with 128 GB of RAM and 10 CPUs!). As a result, we provide three tests to run: the full benchmarks from the paper, an abridged version, and a short version. We expect that running the full benchmark suite could take many weeks, running the abridged version shouldn't take longer than 36 hours, and the short version should take about an hour. More information is given for each of these in the subsections below.

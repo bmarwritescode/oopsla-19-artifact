@@ -337,7 +337,7 @@ As reported in Table 2, many of our tests take quite a while to run (and this is
 
 Performance on the benchmarks may vary significantly depending on the power of the machine used. However, we expect that the comparative difference between mocks and algebraic specifications should remain roughly the same.
 
-However, we found that the memory limitations of the VM had impact on some of the benchmarks. In particular, we noticed that three mock benchmarks (`SuffixArray`, `PasswordManager`, and `Kafka`) all died earlier than the Sketch time out we expected. We suspect the cause of this is the VM running out of memory. Additionally, lowering the RAM below 7 GB affected other tests, including `RomList` as well as `PasswordManager`, `Kafka`, and `HashMap1` for rewrite. On some occasions, sketch running out of memory caused the VM to freeze, and required restarting the VM by exiting, and then running the following.
+However, we found that the memory limitations of the VM had impact on some of the benchmarks. In particular, we noticed that three mock benchmarks (`SuffixArray`, `PasswordManager`, and `Kafka`) all died earlier than the Sketch time out we expected. We suspect the cause of this is the VM running out of memory. Additionally, lowering the RAM below 7 GB affected other tests, including `RomList` for both mocks and rewrites, as well as `PasswordManager`, `Kafka`, and `HashMap1` for rewrite. On some occasions, sketch running out of memory caused the VM to freeze, and required restarting the VM by exiting, and then running the following.
 ```
 vagrant halt
 vagrant up

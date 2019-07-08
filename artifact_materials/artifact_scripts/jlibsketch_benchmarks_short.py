@@ -13,13 +13,7 @@ tests = os.path.join(pwd, "..", "benchmarks")
 
 numTests = 1
 timeout = 20
-seeds = [4166198, 101691, 8252065, 2986398, 3684116, 1936613, 5660081, 1616878, 1242668, 4329362, 5620784, 1743435, 5532210, 3549013, 9580647, 912940, 9786399, 4121193, 5039353, 1481461, 7189671, 1899713, 3415604, 235212, 3395177, 9674824, 9787984, 7445300, 34546, 9402385, 8707669]
-
-# # To Generate New Random Seeds
-# max_seed = 9999999
-# random_seed = 12345
-# random.seed(random_seed)
-# seeds = [random.randint(0, max_seed) for i in range(numTests)]
+seeds = [5620784, 101691, 8252065, 2986398, 3684116, 1936613, 5660081, 1616878, 1242668, 4329362, 4166198, 1743435, 5532210, 3549013, 9580647, 912940, 9786399, 4121193, 5039353, 1481461, 7189671, 1899713, 3415604, 235212, 3395177, 9674824, 9787984, 7445300, 34546, 9402385, 8707669]
 
 class TestJava(TestCommon):
     def __test(self, fs, inline, unroll, adp_conc=False,
@@ -50,8 +44,9 @@ class TestJava(TestCommon):
                     time = re.match(r'Total time = ([0-9]*)', text, re.M|re.I)
                     time = time.group(1)
                     if int(time) > timeout*60*1000:
-                        time_outs += 1                        
-                    if result != 0:
+                        time_outs += 1
+                        time += " (TIMEOUT!)"
+                    else if result != 0:
                         time += " (ERROR!)"
                     results[k].append(time)
                     output.close()
@@ -71,9 +66,9 @@ class TestJava(TestCommon):
         mockResults = open(os.path.join('artifact_results', 'short', 'results_mock.csv'), 'w')
         writer = csv.writer(mockResults)
         mockTests = [
-            (self.run_CipherFactoryMock, 'CipherFactoryTests'),   
-            (self.run_HashMap1Mock, 'HashTableTest'),
-            (self.run_HashMap2Mock, 'BucketingTest'),
+            # (self.run_CipherFactoryMock, 'CipherFactoryTests'),   
+            # (self.run_HashMap1Mock, 'HashTableTest'),
+            # (self.run_HashMap2Mock, 'BucketingTest'),
             (self.run_RomListMock, 'RomListTester'),
             (self.run_ComparatorMock, 'Comparator')
         ]
@@ -83,21 +78,21 @@ class TestJava(TestCommon):
 
     def test_runRewrites(self):
         tmp_output = open(os.path.join('artifact_results', 'short', 'out_rewrite.txt'), 'w')                
-        mockResults = open(os.path.join('artifact_results', 'short', 'results_rewrite.csv'), 'w')
-        writer = csv.writer(mockResults)
+        rewriteResults = open(os.path.join('artifact_results', 'short', 'results_rewrite.csv'), 'w')
+        writer = csv.writer(rewriteResults)
         rewriteTests = [
-            (self.run_CipherFactoryRewrite, 'CipherFactoryTests'),
-            (self.run_HashMap1Rewrite, 'HashTableTest'),
-            (self.run_HashMap2Rewrite, 'BucketingTest'),
+            # (self.run_CipherFactoryRewrite, 'CipherFactoryTests'),
+            # (self.run_HashMap1Rewrite, 'HashTableTest'),
+            # (self.run_HashMap2Rewrite, 'BucketingTest'),
             (self.run_RomListRewrite, 'RomListTester'),
             (self.run_ComparatorRewrite, 'Comparator'),
-            (self.run_PasswordManagerRewrite, 'PasswordManagerTest'),
-            (self.run_KafkaRewrite, 'Kafka_Tester')
+            # (self.run_PasswordManagerRewrite, 'PasswordManagerTest'),
+            # (self.run_KafkaRewrite, 'Kafka_Tester')
         ]
         results = map(lambda x: [x], reduce(lambda x,y: x + y, self.run_tests(rewriteTests, [], tmp_output)))
         writer.writerows(results)
         tmp_output.close()
-        mockResults.close()
+        rewriteResults.close()
         
     def run_SuffixArrayMock(self, seed):
         files = ["SuffixArray_syn.java", "SuffixArrayTest.java", "mock/", "shared/"]

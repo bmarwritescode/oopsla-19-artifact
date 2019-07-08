@@ -15,6 +15,16 @@ vagrant up              # Build the VM
 
 This build should take approximately 30-40 minutes to complete. After this, you can call `vagrant ssh` from within the same directory to access the VM.
 
+**NOTE**: By default, we build the VM with 7 GB of RAM. This may be a lot for some computers, but without this much, many of the benchmarks fail. If you need to change this, edit `Vagrantfile` changing the following section with the desired memory in KB prior to running `vagrant up`.
+```
+  config.vm.provider "virtualbox" do |vb|
+    # Customize the amount of memory on the VM:
+    # vb.memory = "2048"
+    # vb.memory = "4096"
+    vb.memory = "7168"
+  end
+```
+
 ## Getting Started: Navigating the VM
 
 The VM includes both JSketch (with JLibSketch add-on) and Sketch.

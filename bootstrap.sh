@@ -12,14 +12,9 @@ sudo apt install -y maven
 
 # Get and install Sketch from source
 sudo apt install -y autoconf automake libtool bash bison flex gcc g++ perl zsh unzip
-mkdir sketch
+cp /vagrant/sketch.tar.gz ./
+tar -xzf sketch.tar.gz
 cd sketch
-wget https://bitbucket.org/gatoatigrado/sketch-frontend/get/8e90a92ccd0f.zip
-wget https://bitbucket.org/gatoatigrado/sketch-backend/get/7cdf7bda0816.zip
-unzip 8e90a92ccd0f.zip
-unzip 7cdf7bda0816.zip
-mv gatoatigrado-sketch-frontend-8e90a92ccd0f sketch-frontend
-mv gatoatigrado-sketch-backend-7cdf7bda0816 sketch-backend
 cd sketch-frontend
 make assemble-noarch
 cd ../sketch-backend
@@ -39,3 +34,13 @@ git clone https://github.com/plum-umd/java-sketch.git
 cd java-sketch
 cd jskparser
 make
+
+# Copy artifact materials into Java-sketch repo
+cd ..
+cp -R /vagrant/artifact_materials/artifact_examples ./artifact_examples/
+cp -R /vagrant/artifact_materials/artifact_results ./artifact_results/
+cp -R /vagrant/artifact_materials/artifact_scripts ./artifact_scripts/
+cp -R /vagrant/artifact_materials/benchmarks ./benchmarks/
+
+# Install Sloccount
+sudo apt install -y sloccount

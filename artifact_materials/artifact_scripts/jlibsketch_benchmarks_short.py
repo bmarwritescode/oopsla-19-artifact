@@ -66,9 +66,9 @@ class TestJava(TestCommon):
         mockResults = open(os.path.join('artifact_results', 'short', 'results_mock.csv'), 'w')
         writer = csv.writer(mockResults)
         mockTests = [
-            # (self.run_CipherFactoryMock, 'CipherFactoryTests'),   
-            # (self.run_HashMap1Mock, 'HashTableTest'),
-            # (self.run_HashMap2Mock, 'BucketingTest'),
+            (self.run_CipherFactoryMock, 'CipherFactoryTests'),   
+            (self.run_HashMap1Mock, 'HashTableTest'),
+            (self.run_HashMap2Mock, 'BucketingTest'),
             (self.run_RomListMock, 'RomListTester'),
             (self.run_ComparatorMock, 'Comparator')
         ]
@@ -81,13 +81,13 @@ class TestJava(TestCommon):
         rewriteResults = open(os.path.join('artifact_results', 'short', 'results_rewrite.csv'), 'w')
         writer = csv.writer(rewriteResults)
         rewriteTests = [
-            # (self.run_CipherFactoryRewrite, 'CipherFactoryTests'),
-            # (self.run_HashMap1Rewrite, 'HashTableTest'),
-            # (self.run_HashMap2Rewrite, 'BucketingTest'),
+            (self.run_CipherFactoryRewrite, 'CipherFactoryTests'),
+            (self.run_HashMap1Rewrite, 'HashTableTest'),
+            (self.run_HashMap2Rewrite, 'BucketingTest'),
             (self.run_RomListRewrite, 'RomListTester'),
             (self.run_ComparatorRewrite, 'Comparator'),
-            # (self.run_PasswordManagerRewrite, 'PasswordManagerTest'),
-            # (self.run_KafkaRewrite, 'Kafka_Tester')
+            (self.run_PasswordManagerRewrite, 'PasswordManagerTest'),
+            (self.run_KafkaRewrite, 'Kafka_Tester')
         ]
         results = map(lambda x: [x], reduce(lambda x,y: x + y, self.run_tests(rewriteTests, [], tmp_output)))
         writer.writerows(results)
